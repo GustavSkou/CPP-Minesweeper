@@ -1,5 +1,5 @@
-#include "genMines.cpp"
 #include <iostream>
+#include "minefield.cpp"
 
 void coutMinefield ( int height, int width) {
 
@@ -7,7 +7,7 @@ void coutMinefield ( int height, int width) {
 
       std::cout << minefield[ n ].symbol;
 
-      if ( minefield[n].x == width ) {
+      if ( minefield[ n ].x == width ) {
 
         std::cout << "\n";
       }

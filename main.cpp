@@ -1,4 +1,6 @@
 #include "input.cpp"
+#include "genMines.cpp"
+#include "streamMinefield.cpp"
 
 int height = 9;
 int width = 9;

@@ -1,6 +1,10 @@
+#ifndef MY_HEADER_H
+#define MY_HEADER_H
+
 #include "minefield.cpp"
 #include <time.h>
 
+#endif 
 
 void genMines ( int mines , int* fieldSize) {
   
