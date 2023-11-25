@@ -1,6 +1,9 @@
+#ifndef MINEFIELD_HEADER
+#define MINEFIELD_HEADER
+
+#include "cell.cpp"
 #include <vector>
 #include <string>
-#include "cell.cpp"
 
 std::vector<Cell> minefield;
 
@@ -17,3 +20,5 @@ void genMinefield( int height, int width ) {
     }
   }
 }
+
+#endif
