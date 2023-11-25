@@ -7,7 +7,7 @@ int width = 9;
 int fieldSize = height * width;
 int* fieldSizePtr = &fieldSize;
 
-int mines = 5;
+int mines = 3;
 
 bool boom = false;
 
