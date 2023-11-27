@@ -61,29 +61,45 @@ int checkCell( int cellIndex ) {
   }
 }
 
+std::vector<Cell> SurroundingCells;
+std::vector<Cell> SurroundingCellsToOpen;
+int checkSurroundingCells ( int cellIndex, int width) {
+  int mineCount = 0;
+  int surroundingCellsIndex[8] = {
+    cellIndex - width - 1, 
+    cellIndex - width - 0, 
+    cellIndex - width + 1, 
+    cellIndex - 1,
+    cellIndex + 1,
+    cellIndex + width - 1,
+    cellIndex + width - 0,
+    cellIndex + width + 1
+  };
 
-int checkSurroundingsCells ( int cellIndex, int width) {
-  std::vector<Cell> SurroundingsCells;
-  int mineCount;
+  for (int index : surroundingCellsIndex) {
+    if ( index < 0 || index > minefield.size() ) {
+      continue;
+    }
+    if ( minefield[ index ].is_open ) {
+      continue;
+    }
 
-  SurroundingsCells.push_back(minefield[ cellIndex - width - 1 ] );
-  SurroundingsCells.push_back(minefield[ cellIndex - width - 0 ]);
-  SurroundingsCells.push_back(minefield[ cellIndex - width + 1 ]);
+    SurroundingCells.push_back( minefield[ index ] );
+  }
 
-  SurroundingsCells.push_back(minefield[ cellIndex - 1 ]);
-  SurroundingsCells.push_back(minefield[ cellIndex + 1 ]);
-  
-  SurroundingsCells.push_back(minefield[ cellIndex + width - 1 ]);
-  SurroundingsCells.push_back(minefield[ cellIndex + width - 0 ]);
-  SurroundingsCells.push_back(minefield[ cellIndex + width + 1 ]);
-  
-  // The index for the cells in SurroundingsCells is stored like so // 0 1 2     
-  for (int n = 0; n < SurroundingsCells.size(); ++n) {              // 3   4
-    if (SurroundingsCells[n].is_mine) {                             // 5 6 7
-      ++mineCount;                                      
+  // The index for the cells in SurroundingCells is stored like so // 0 1 2 if possibel
+  for (int n = 0; n < SurroundingCells.size(); ++n) {              // 3   4
+    if (SurroundingCells[n].is_mine) {                             // 5 6 7
+      ++mineCount;                                  
+    }     
+  }
+  for (int n = 0; n < SurroundingCells.size(); ++n) {
+    if (!SurroundingCells[n].is_mine && !SurroundingCells[n].is_flaged) {
+      SurroundingCellsToOpen.push_back(SurroundingCells[n]);
     }
   }
-  
+  SurroundingCells.clear();
+    
   return mineCount;
 }
 
@@ -95,17 +111,25 @@ bool openCell ( int cellIndex, int width) {
   
   case 1:
     {
-      int SurroundingsCellsMines = checkSurroundingsCells( cellIndex, width);
+      int SurroundingCellsMines = 0;
+      SurroundingCellsMines = checkSurroundingCells( cellIndex, width );
 
       minefield[ cellIndex ].is_open = true;
 
-      if ( SurroundingsCellsMines > 0 ) {
+      if ( SurroundingCellsMines > 0 ) {
 
-        minefield[ cellIndex ].symbol = " " + std::to_string( SurroundingsCellsMines ) + " ";
+        minefield[ cellIndex ].symbol = " " + std::to_string( SurroundingCellsMines ) + " ";
       }
       else {
 
         minefield[ cellIndex ].symbol = " . ";
+        
+        while ( SurroundingCellsToOpen.size() > 0 ) {
+          cellIndex = getCellIndex ( SurroundingCellsToOpen.back().x, SurroundingCellsToOpen.back().y );
+          SurroundingCellsToOpen.pop_back();
+          openCell ( cellIndex, width);
+        }
+        
       }
       
       return false;

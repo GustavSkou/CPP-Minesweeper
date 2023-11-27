@@ -7,13 +7,15 @@ int width = 9;
 int fieldSize = height * width;
 int* fieldSizePtr = &fieldSize;
 
-int mines = 5;
+int mines = 20;
 
 bool boom = false;
 
 int main ( ) {
   
   genMinefield( height, width );
+  sortMinefield( minefield, width );
+  
   genMines( mines, fieldSizePtr );
   coutMinefield( height, width );
 
