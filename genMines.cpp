@@ -1,32 +1,31 @@
-#ifndef MY_HEADER_H
-#define MY_HEADER_H
-
 #include "minefield.cpp"
 #include <time.h>
 
-#endif 
-
-void genMines ( int mines , int* fieldSize) {
+int genMines (int height, int width, int mines) 
+{
   
-  int mineIndex;
+  int mineRowIndex, mineColumnIndex;
 
   for ( int n = 0; n < mines; ++n) {
 
     srand( time ( NULL ) );
-    mineIndex = rand() % *fieldSize;
+    mineRowIndex = rand() % height;
+    mineColumnIndex = rand() % width;
 
-    if (minefield [ mineIndex ].is_mine == true) {
+    if (minefield[ mineRowIndex ][ mineColumnIndex ].is_mine == true) {
 
-      while ( minefield [ mineIndex ].is_mine ) {
+      while ( minefield [ mineRowIndex ][ mineColumnIndex ].is_mine ) {
 
-        mineIndex = rand() % *fieldSize;
+        mineRowIndex = rand() % height;
+        mineColumnIndex = rand() % width;
       }
 
-      minefield[ mineIndex ].is_mine = true;
+      minefield[ mineRowIndex ][ mineColumnIndex ].is_mine = true;
     }
     else {
       
-      minefield[ mineIndex ].is_mine = true;
+      minefield[ mineRowIndex ][ mineColumnIndex ].is_mine = true;
     }
   }
-}
+  return 0;
+} 

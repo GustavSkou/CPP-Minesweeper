@@ -3,22 +3,25 @@
 
 #include "cell.cpp"
 #include <vector>
+#include <algorithm>
 #include <string>
 
-std::vector<Cell> minefield;
+std::vector<std::vector<Cell>> minefield;
+void genMinefield(int height, int width)
+{
+      std::string unknownSymbol = " # ";
 
-void genMinefield( int height, int width ) {
-  std::string unknownSymbol = " # ";
+      for (int rowNumber = 1; rowNumber <= height; ++rowNumber)
+      {
+            std::vector<Cell> minefieldRow;
 
-  for ( int y = 1; y <= height; ++y ) {
-
-    for ( int x = 1; x <= width; ++x ) {
-
-      Cell cell( x, y, unknownSymbol);
-      minefield.push_back( cell );
-
-    }
-  }
+            for (int columnNumber = 1; columnNumber <= width; ++columnNumber)
+            {
+                  Cell cell(columnNumber, rowNumber, unknownSymbol);
+                  minefieldRow.push_back( cell );
+            }
+            minefield.push_back( minefieldRow );
+      }
 }
 
 #endif
