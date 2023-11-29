@@ -23,34 +23,36 @@ class Cell {
 
 #include "minefield.cpp"
 
-int getCellIndex (int x, int y ) {
+/*void getCellIndex (int x, int y, int height, int width, int* rowAddress,  int* columnAddress) {
 
-  for ( int n = 0; n < minefield.size(); ++n ) {
-
-    if ( minefield[ n ].x == x && minefield[ n ].y == y ) { 
-
-      return n;
+  for ( int rowNumber = 0; rowNumber < height; ++rowNumber )
+  {
+    for ( int columnNumber = 0; columnNumber < width; ++columnNumber )
+    {
+      if ( minefield[ rowNumber ][ columnNumber ] .x == x && minefield[ rowNumber ][ columnNumber ].y == y ) 
+      { 
+        *rowAddress = rowNumber;
+        *columnAddress = columnNumber;
+      }
     }
   }
-
-  return 0;
-}
+}*/
 
 // Returns 0 if cell cannot be opened
 // Returns 1 if cell can be opened
 // Returns 2 if cell is a mine
-int checkCell( int cellIndex ) {    
-  if ( minefield[ cellIndex ].is_open == true ) { 
+int checkCell( int* rowAddress, int* columnAddress) {    
+  if ( minefield[ *rowAddress ][ *columnAddress ].is_open == true ) { 
 
     return 0;
   }
 
-  if ( minefield[ cellIndex ].is_flaged == true ) { 
+  if ( minefield[ *rowAddress ][ *columnAddress ].is_flaged == true ) { 
 
     return 0;
   }
 
-  if ( minefield[ cellIndex ].is_mine == true ) { 
+  if ( minefield[ *rowAddress ][ *columnAddress ].is_mine == true ) { 
 
     return 2;
   }
@@ -61,7 +63,7 @@ int checkCell( int cellIndex ) {
   }
 }
 
-std::vector<Cell> SurroundingCells;
+/*std::vector<Cell> SurroundingCells;
 std::vector<Cell> SurroundingCellsToOpen;
 int checkSurroundingCells ( int cellIndex, int width) {
   int mineCount = 0;
@@ -101,44 +103,43 @@ int checkSurroundingCells ( int cellIndex, int width) {
   SurroundingCells.clear();
     
   return mineCount;
-}
+}*/
 
-bool openCell ( int cellIndex, int width) {
-  switch ( checkCell ( cellIndex ) )
+bool openCell (int height, int width, int* rowAddress, int* columnAddress) {
+  switch ( checkCell ( rowAddress, columnAddress ) )
   {
-  case 0:
-    return false;
-  
-  case 1:
-    {
-      int SurroundingCellsMines = 0;
-      SurroundingCellsMines = checkSurroundingCells( cellIndex, width );
+    case 0:
+      return false;
+    
+    case 1:
+      {
+        int SurroundingCellsMines = 0;
+        //SurroundingCellsMines = checkSurroundingCells( cellIndex, height, width );
 
-      minefield[ cellIndex ].is_open = true;
+        minefield[ *rowAddress ][ *columnAddress ].is_open = true;
 
-      if ( SurroundingCellsMines > 0 ) {
+        if ( SurroundingCellsMines > 0 ) {
 
-        minefield[ cellIndex ].symbol = " " + std::to_string( SurroundingCellsMines ) + " ";
-      }
-      else {
+          minefield[ *rowAddress ][ *columnAddress ].symbol = " " + std::to_string( SurroundingCellsMines ) + " ";
+        }
+        else {
 
-        minefield[ cellIndex ].symbol = " . ";
-        
-        while ( SurroundingCellsToOpen.size() > 0 ) {
-          cellIndex = getCellIndex ( SurroundingCellsToOpen.back().x, SurroundingCellsToOpen.back().y );
-          SurroundingCellsToOpen.pop_back();
-          openCell ( cellIndex, width);
+          minefield[ *rowAddress ][ *columnAddress ].symbol = " . ";
+          
+          /*while ( SurroundingCellsToOpen.size() > 0 ) {
+            cellIndex = getCellIndex ( SurroundingCellsToOpen.back().x, SurroundingCellsToOpen.back().y, height, width );
+            SurroundingCellsToOpen.pop_back();
+            openCell ( cellIndex, height, width);
+          }*/
+          
         }
         
+        return false;
       }
-      
-      return false;
-    }
 
-  case 2:
-    minefield[ cellIndex ].symbol = " ¤ ";
-
-    return true;
+    case 2:
+      minefield[ *rowAddress ][ *columnAddress ].symbol = " ¤ ";
+      return true;
   }
 
   return false;

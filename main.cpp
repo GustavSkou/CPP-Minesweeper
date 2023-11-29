@@ -4,26 +4,24 @@
 
 int height = 9;
 int width = 9;
-int fieldSize = height * width;
-int* fieldSizePtr = &fieldSize;
 
 int mines = 20;
 
 bool boom = false;
 
-int main ( ) {
-  
-  genMinefield( height, width );
-  sortMinefield( minefield, width );
-  
-  genMines( mines, fieldSizePtr );
-  coutMinefield( height, width );
+int main()
+{
 
-  do {
-    boom = playerAction ( height, width );
-    coutMinefield( height, width );
-  }
-  while( boom == false );
+  genMinefield(height, width);
+
+  genMines(height, width, mines);
+  coutMinefield(height, width);
+
+  do
+  {
+    boom = playerAction(height, width);
+    coutMinefield(height, width);
+  } while (boom == false);
 
   return 0;
 }
