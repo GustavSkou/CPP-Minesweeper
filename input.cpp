@@ -33,5 +33,6 @@ bool playerAction (int height, int width) {
   else {
 
     return true;
+
   }
 }

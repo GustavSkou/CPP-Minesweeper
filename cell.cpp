@@ -24,28 +24,30 @@ public:
 
 #include "minefield.cpp"
 
+
 // Returns 0 if cell cannot be opened
 // Returns 1 if cell can be opened
 // Returns 2 if cell is a mine
-int checkCell(int* rowAddress, int* columnAddress)
-{
-  if ( minefield[*rowAddress][*columnAddress].is_open )
-  {
+int checkCell( int* rowAddress, int* columnAddress) {    
+  if ( minefield[ *rowAddress ][ *columnAddress ].is_open == true ) { 
+
     return 0;
   }
 
-  if ( minefield[*rowAddress][*columnAddress].is_flaged )
-  {
+  if ( minefield[ *rowAddress ][ *columnAddress ].is_flaged == true ) { 
+
     return 0;
   }
 
-  if ( minefield[*rowAddress][*columnAddress].is_mine )
-  {
+  if ( minefield[ *rowAddress ][ *columnAddress ].is_mine == true ) { 
+
+
     return 2;
   }
 
   return 1;
 }
+
 
 std::vector<std::vector<Cell>> SurroundingCells;
 std::vector<Cell> CellsToOpen;
@@ -80,14 +82,13 @@ int checkSurroundingCells(int height, int width, int* rowAddress, int* columnAdd
         }
 
         SurroundingCellsRow.push_back(minefield.at(row).at(column));
-
       }
       catch (const std::out_of_range &e)
       {
         continue;
       }
     }
-
+      
     SurroundingCells.push_back(SurroundingCellsRow);
   }
   for (int row = 0; row < 3; ++row)
@@ -107,9 +108,10 @@ int checkSurroundingCells(int height, int width, int* rowAddress, int* columnAdd
       }
     }
   }
-
+    
   return mineCount;
 }
+
 
 bool openCell(int height, int width, int* rowAddress, int* columnAddress)
 {
@@ -148,7 +150,7 @@ bool openCell(int height, int width, int* rowAddress, int* columnAddress)
         int newRow = CellsToOpen[ cellIndex ].y - 1;
         int newColumn = CellsToOpen[ cellIndex ].x - 1;
 
-        openCell(height, width, &newRow, &newColumn);
+        openCell( height, width, &newRow, &newColumn );
       }
     }
     return false;

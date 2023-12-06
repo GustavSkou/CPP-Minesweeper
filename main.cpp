@@ -2,10 +2,12 @@
 #include "genMines.cpp"
 #include "streamMinefield.cpp"
 
-int height = 5;
-int width = 5;
 
-int mines = 2;
+int height = 9;
+int width = 9;
+
+int mines = 10;
+
 
 bool boom = false;
 
