@@ -17,19 +17,21 @@ bool playerAction (int height, int width) {
     std::cout << "\n num to large\n";
     playerAction (height, width);
   }
-  else {
-
-    index = getCellIndex ( x , y );
-
-    if ( openCell( index, width) == true ) {
-      
-      return true;
-    }
-    else {
-
-      return false;
-    }
+  
+  if ( x < 0 || y < 0 ) {
+    std::cout << "\n num to small\n";
+    playerAction (height, width);
   }
 
-  return false;
+  x = x - 1;
+  y = y - 1;
+
+  if ( !openCell(height, width, &y, &x) ) {
+    
+    return false;
+  }
+  else {
+
+    return true;
+  }
 }

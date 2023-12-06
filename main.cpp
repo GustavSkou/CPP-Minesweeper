@@ -2,26 +2,28 @@
 #include "genMines.cpp"
 #include "streamMinefield.cpp"
 
-int height = 9;
-int width = 9;
-int fieldSize = height * width;
-int* fieldSizePtr = &fieldSize;
+int height = 5;
+int width = 5;
 
-int mines = 3;
+int mines = 2;
 
 bool boom = false;
 
-int main ( ) {
-  
-  genMinefield( height, width );
-  genMines( mines, fieldSizePtr );
-  coutMinefield( height, width );
+int main()
+{
 
-  do {
-    boom = playerAction ( height, width );
-    coutMinefield( height, width );
-  }
-  while( boom == false );
+  genMinefield(height, width);
+
+  genMines(height, width, mines);
+  coutMinefield(height, width);
+
+  do
+  {
+    boom = playerAction(height, width);
+    coutMinefield(height, width);
+  } while (boom == false);
+
+  coutOpenMinefield(height, width);
 
   return 0;
 }
