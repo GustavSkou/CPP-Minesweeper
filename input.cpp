@@ -26,12 +26,13 @@ bool playerAction (int height, int width) {
   x = x - 1;
   y = y - 1;
 
-  if ( openCell(height, width, &y, &x) == true ) {
+  if ( !openCell(height, width, &y, &x) ) {
     
-    return true;
+    return false;
   }
   else {
 
-    return false;
+    return true;
+
   }
 }
