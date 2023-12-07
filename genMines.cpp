@@ -11,22 +11,21 @@ int genMines(int height, int width, int mines)
             mineRowIndex = rand() % height;
             mineColumnIndex = rand() % width;
 
-            if (minefield[mineRowIndex][mineColumnIndex].is_mine == true)
+            if (minefield[mineRowIndex][mineColumnIndex].is_cell_mine())
             {
 
-                  while (minefield[mineRowIndex][mineColumnIndex].is_mine)
+                  while (minefield[mineRowIndex][mineColumnIndex].is_cell_mine())
                   {
 
                         mineRowIndex = rand() % height;
                         mineColumnIndex = rand() % width;
                   }
 
-                  minefield[mineRowIndex][mineColumnIndex].is_mine = true;
+                  minefield[mineRowIndex][mineColumnIndex].set_mine();
             }
             else
             {
-
-                  minefield[mineRowIndex][mineColumnIndex].is_mine = true;
+                  minefield[mineRowIndex][mineColumnIndex].set_mine();
             }
       }
       return 0;
