@@ -2,10 +2,10 @@
 #include "genMines.cpp"
 #include "streamMinefield.cpp"
 
-int height = 5;
-int width = 5;
+int height = 9;
+int width = 9;
 
-int mines = 3;
+int mines = 7;
 
 bool boom = false;
 
@@ -23,7 +23,7 @@ int main()
       } 
       while (boom == false);
 
-      coutOpenMinefield(height, width);
+      std::cout << "---you lost---";
 
       return 0;
 }
