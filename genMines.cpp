@@ -1,31 +1,33 @@
 #include "minefield.cpp"
 #include <time.h>
 
-int genMines (int height, int width, int mines) 
+int genMines(int height, int width, int mines)
 {
-  
-  int mineRowIndex, mineColumnIndex;
+      int mineRowIndex, mineColumnIndex;
 
-  for ( int n = 0; n < mines; ++n) {
+      for (int n = 0; n < mines; ++n)
+      {
+            srand(time(NULL));
+            mineRowIndex = rand() % height;
+            mineColumnIndex = rand() % width;
 
-    srand( time ( NULL ) );
-    mineRowIndex = rand() % height;
-    mineColumnIndex = rand() % width;
+            if (minefield[mineRowIndex][mineColumnIndex].is_mine == true)
+            {
 
-    if (minefield[ mineRowIndex ][ mineColumnIndex ].is_mine == true) {
+                  while (minefield[mineRowIndex][mineColumnIndex].is_mine)
+                  {
 
-      while ( minefield [ mineRowIndex ][ mineColumnIndex ].is_mine ) {
+                        mineRowIndex = rand() % height;
+                        mineColumnIndex = rand() % width;
+                  }
 
-        mineRowIndex = rand() % height;
-        mineColumnIndex = rand() % width;
+                  minefield[mineRowIndex][mineColumnIndex].is_mine = true;
+            }
+            else
+            {
+
+                  minefield[mineRowIndex][mineColumnIndex].is_mine = true;
+            }
       }
-
-      minefield[ mineRowIndex ][ mineColumnIndex ].is_mine = true;
-    }
-    else {
-      
-      minefield[ mineRowIndex ][ mineColumnIndex ].is_mine = true;
-    }
-  }
-  return 0;
-} 
+      return 0;
+}
