@@ -38,6 +38,20 @@ class Cell
                   is_open = true;
             }
 
+            void change_flag_state()
+            {
+                  switch (is_flaged)
+                  {
+                        case false:
+                              is_flaged = true;
+                              break;
+                        
+                        case true:
+                              is_flaged = false;
+                              break;
+                  }
+            }
+
             bool is_cell_mine()
             {
                   return is_mine;
