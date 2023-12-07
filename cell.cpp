@@ -44,10 +44,12 @@ class Cell
                   {
                         case false:
                               is_flaged = true;
+                              symbol = " F ";
                               break;
                         
                         case true:
                               is_flaged = false;
+                              symbol = " # ";
                               break;
                   }
             }
@@ -154,11 +156,17 @@ int checkSurroundingCells(int height, int width, int *rowAddress, int *columnAdd
       return mineCount;
 }
 
-bool openCell(int height, int width, int *rowAddress, int *columnAddress)
+bool openCell(int height, int width, int *rowAddress, int *columnAddress, bool *inputTypeAddress)
 {
+      if (*inputTypeAddress)
+      {
+            minefield[*rowAddress][*columnAddress].change_flag_state();
+            return false;
+      }
+
       switch (checkCell(rowAddress, columnAddress)) // 0 = open/flaged,
       {                                             // 1 = unopened,
-      case 0:                                       // 2 = mine
+      case 0:                                       // 2 = mine      
             return false;
 
       case 1:
@@ -190,14 +198,14 @@ bool openCell(int height, int width, int *rowAddress, int *columnAddress)
                         int newRow = CellsToOpen[cellIndex].get_cell_pos().y - 1;
                         int newColumn = CellsToOpen[cellIndex].get_cell_pos().x - 1;
 
-                        openCell(height, width, &newRow, &newColumn);
+                        openCell(height, width, &newRow, &newColumn, inputTypeAddress);
                   }
             }
             return false;
       }
-
       case 2:
-            minefield[*rowAddress][*columnAddress].symbol = " ¤ ";
+            //dead
+            minefield[*rowAddress][*columnAddress].open_cell();
             return true;
       }
 

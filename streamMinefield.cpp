@@ -5,8 +5,14 @@ void coutMinefield(int height, int width)
 {
       for (int rowNumber = height-1; rowNumber >= 0; --rowNumber)
       {
+            std::cout << rowNumber + 1;
             for (int columnNumber = 0; columnNumber < width; ++columnNumber)
             {     
+                  if ( minefield[rowNumber][columnNumber].is_cell_mine() && minefield[rowNumber][columnNumber].is_cell_open()) 
+                  {
+                        minefield[ rowNumber ][ columnNumber ].symbol = " ¤ ";
+                  }
+
                   std::cout << minefield[rowNumber][columnNumber].symbol;
 
                   if (columnNumber == width - 1)
@@ -15,7 +21,15 @@ void coutMinefield(int height, int width)
                   }
             }
       }
-      for(int row = 0; row < SurroundingCells.size(); ++row) 
+      std::cout << "X";
+      for (int columnNumber = 1; columnNumber <= width; ++columnNumber)
+      {
+            std::cout << " " << columnNumber << " ";
+      }
+
+      std::cout << "\n";
+
+      /*for(int row = 0; row < SurroundingCells.size(); ++row) 
       {
             for (int column = 0; column < SurroundingCells.at(row).size(); ++column)
             {
@@ -28,7 +42,7 @@ void coutMinefield(int height, int width)
                   << SurroundingCells.at(row).at(column).is_cell_mine()
                   << "\n";
             }
-      }
+      }*/
 }
 
 void coutOpenMinefield(int height, int width)
@@ -39,7 +53,7 @@ void coutOpenMinefield(int height, int width)
       {
             for (int columnNumber = 0; columnNumber < width; ++columnNumber)
             {     
-                  if ( minefield[rowNumber][columnNumber].is_cell_mine() ) 
+                  if ( minefield[rowNumber][columnNumber].is_cell_mine()) 
                   {
                         minefield[ rowNumber ][ columnNumber ].symbol = " ¤ ";
                   }
@@ -48,7 +62,8 @@ void coutOpenMinefield(int height, int width)
                   {
                         std::cout 
                         << minefield[rowNumber][columnNumber].symbol
-                        << "\n";
+                        << "\n"
+                        << rowNumber;
                         
                         continue;
                   }
