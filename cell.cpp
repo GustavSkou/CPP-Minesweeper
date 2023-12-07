@@ -1,5 +1,3 @@
-//hej
-
 #ifndef CELL_HEADER
 #define CELL_HEADER
 
@@ -7,19 +5,57 @@
 
 class Cell
 {
-      public:
-            int x;
-            int y;
-            std::string symbol;
+      private:
             bool is_mine = false;
             bool is_open = false;
             bool is_flaged = false;
-
+            
+            struct Position
+            {
+                  int x;
+                  int y;
+            };
+            Position cell_position;
+            
+      public:
+            std::string symbol;
+            
             Cell(int xKoordinat, int yKoordinat, std::string cellSymbol)
             {
-                  x = xKoordinat;
-                  y = yKoordinat;
+                  cell_position.x = xKoordinat;
+                  cell_position.y = yKoordinat;
+
                   symbol = cellSymbol;
+            }
+
+            void set_mine()
+            {
+                  is_mine = true;
+            }
+
+            void open_cell()
+            {
+                  is_open = true;
+            }
+
+            bool is_cell_mine()
+            {
+                  return is_mine;
+            }
+
+            bool is_cell_flaged()
+            {
+                  return is_flaged;
+            }
+
+            bool is_cell_open()
+            {
+                  return is_open;
+            }
+            
+            Position get_cell_pos() 
+            {
+                  return cell_position;
             }
 };
 
@@ -30,17 +66,17 @@ class Cell
 // Returns 2 if cell is a mine
 int checkCell(int *rowAddress, int *columnAddress)
 {
-      if (minefield[*rowAddress][*columnAddress].is_open)
+      if (minefield[*rowAddress][*columnAddress].is_cell_open())
       {
             return 0;
       }
 
-      if (minefield[*rowAddress][*columnAddress].is_flaged)
+      if (minefield[*rowAddress][*columnAddress].is_cell_flaged())
       {
             return 0;
       }
 
-      if (minefield[*rowAddress][*columnAddress].is_mine)
+      if (minefield[*rowAddress][*columnAddress].is_cell_mine())
       {
             return 2;
       }
@@ -75,7 +111,7 @@ int checkSurroundingCells(int height, int width, int *rowAddress, int *columnAdd
             {
                   try
                   {
-                        if (minefield.at(row).at(column).is_open)
+                        if (minefield.at(row).at(column).is_cell_open())
                         {
                               continue;
                         }
@@ -95,7 +131,7 @@ int checkSurroundingCells(int height, int width, int *rowAddress, int *columnAdd
       {
             for (int column = 0; column < SurroundingCells[row].size(); ++column)
             {
-                  if (SurroundingCells[row][column].is_mine)
+                  if (SurroundingCells[row][column].is_cell_mine())
                   {
                         ++mineCount;
                   }    
@@ -115,7 +151,7 @@ bool openCell(int height, int width, int *rowAddress, int *columnAddress)
       {
             int SurroundingCellsMines = 0;
 
-            minefield[*rowAddress][*columnAddress].is_open = true;
+            minefield[*rowAddress][*columnAddress].open_cell();
 
             SurroundingCellsMines = checkSurroundingCells(height, width, rowAddress, columnAddress);
 
@@ -137,8 +173,8 @@ bool openCell(int height, int width, int *rowAddress, int *columnAddress)
 
                   for (int cellIndex = 0; cellIndex < CellsToOpen.size(); cellIndex++)
                   {
-                        int newRow = CellsToOpen[cellIndex].y - 1;
-                        int newColumn = CellsToOpen[cellIndex].x - 1;
+                        int newRow = CellsToOpen[cellIndex].get_cell_pos().y - 1;
+                        int newColumn = CellsToOpen[cellIndex].get_cell_pos().x - 1;
 
                         openCell(height, width, &newRow, &newColumn);
                   }

@@ -21,11 +21,11 @@ void coutMinefield(int height, int width)
             {
                   std::cout
                   << "("
-                  << SurroundingCells.at(row).at(column).x 
+                  << SurroundingCells.at(row).at(column).get_cell_pos().x 
                   << "; "
-                  << SurroundingCells.at(row).at(column).y
+                  << SurroundingCells.at(row).at(column).get_cell_pos().y
                   << ")"
-                  << SurroundingCells.at(row).at(column).is_mine
+                  << SurroundingCells.at(row).at(column).is_cell_mine()
                   << "\n";
             }
       }
@@ -39,7 +39,7 @@ void coutOpenMinefield(int height, int width)
       {
             for (int columnNumber = 0; columnNumber < width; ++columnNumber)
             {     
-                  if ( minefield[rowNumber][columnNumber].is_mine == true ) 
+                  if ( minefield[rowNumber][columnNumber].is_cell_mine() ) 
                   {
                         minefield[ rowNumber ][ columnNumber ].symbol = " ¤ ";
                   }

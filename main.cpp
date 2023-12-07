@@ -1,11 +1,11 @@
-#include "input.cpp"
+#include "userInput.cpp"
 #include "genMines.cpp"
 #include "streamMinefield.cpp"
 
 int height = 5;
 int width = 5;
 
-int mines = 2;
+int mines = 3;
 
 bool boom = false;
 
